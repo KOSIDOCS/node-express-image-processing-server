@@ -1,8 +1,16 @@
 /* eslint-disable require-jsdoc */
 const {Router} = require('express');
+const { request } = require('http');
 const multer = require('multer');
+const path = require('path');
 
 const router = Router();
+
+const photoPath = path.resolve(__dirname, '../../client/photo-viewer.html');
+
+router.get('/photo-viewer', (request, response) => {
+  response.sendFile(photoPath);
+});
 
 // eslint-disable-next-line require-jsdoc
 function filename(request, file, callback) {
