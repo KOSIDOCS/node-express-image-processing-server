@@ -1,3 +1,7 @@
+/* eslint-disable padded-blocks */
+/* eslint-disable new-cap */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 const {Router} = require('express');
 const multer = require('multer');
@@ -13,9 +17,9 @@ router.get('/photo-viewer', (request, response) => {
 });
 
 // eslint-disable-next-line require-jsdoc
-function filename(request, file, callback) {
+const filename = (request, file, callback) => {
   callback(null, file.originalname);
-}
+};
 
 const storage = multer.diskStorage({
   destination: 'api/uploads/',
