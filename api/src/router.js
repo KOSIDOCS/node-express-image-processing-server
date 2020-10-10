@@ -1,8 +1,8 @@
 /* eslint-disable require-jsdoc */
 const {Router} = require('express');
-const { request } = require('http');
 const multer = require('multer');
 const path = require('path');
+const imageProcessor = require('./imageProcessor');
 
 const router = Router();
 
@@ -33,12 +33,17 @@ const fileFilter = (request, file, callback) => {
 
 const upload = multer({fileFilter: fileFilter, storage: storage});
 
-router.post('/upload', upload.single('photo'), (request, response) => {
-  if (request.fileValidationError) {
-    return response.status(400).json({error: request.fileValidationError});
-  } else {
-    return response.status(201).json({success: true});
+router.post('/upload', upload.single('photo'), async (request, response) => {
+  if (request.fileValidationError) return response.status(400).json({error: request.fileValidationError});
+
+  try {
+    await imageProcessor(request.file.filename);
+  } catch (error) {
+   
   }
+
+  return response.status(201).json({success: true});
+  
 });
 
 module.exports = router;
